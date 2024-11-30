@@ -27,12 +27,9 @@
             Mandatory,
             ValueFromPipeline
         )]
+        [ValidateScript({ Test-Base64 -Base64String $_ }, ErrorMessage = 'Invalid Base64 string')]
         [string] $Base64String
     )
 
-    if ([PSBase64]::IsValid($Base64String)) {
-        return [PSBase64]::ConvertFromBase64($Base64String)
-    } else {
-        throw "Invalid Base64 string"
-    }
+    return [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Base64String))
 }

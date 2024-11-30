@@ -31,5 +31,5 @@
         )]
         [string] $String
     )
-    return [PSBase64]::ConvertToBase64($String)
+    return [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
 }

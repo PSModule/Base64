@@ -11,6 +11,12 @@
         True
 
         Returns $true as the string is a valid Base64 string.
+
+        .EXAMPLE
+        'U29tZSBkYXRh' | Test-Base64
+        True
+
+        Returns $true as the string is a valid Base64 string.
     #>
     [OutputType([bool])]
     [CmdletBinding()]
@@ -22,5 +28,10 @@
         [string] $Base64String
     )
 
-    return [PSBase64]::IsValid($Base64String)
+    try {
+        $null = [Convert]::FromBase64String($Base64String)
+        return $true
+    } catch {
+        return $false
+    }
 }
