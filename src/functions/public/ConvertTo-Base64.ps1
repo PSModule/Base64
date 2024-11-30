@@ -4,18 +4,17 @@
         Convert a string to base64
 
         .DESCRIPTION
-        Converts a string to a Base64 encoded string.
+        Converts a string to a base64 encoded string.
 
         .EXAMPLE
         ConvertTo-Base64 -String 'ThisIsANiceString'
         VGhpc0lzQU5pY2VTdHJpbmc=
 
-        Converts the string 'ThisIsANiceString' to a Base64 encoded string.
+        Converts the string 'ThisIsANiceString' to a base64 encoded string.
 
         .EXAMPLE
         'Hello World' | ConvertTo-Base64
-
-        SABlAGwAbABvACAAVwBvAHIAbABkAA==
+        SGVsbG8gV29ybGQ=
 
         Converts the string 'Hello World' to base64.
     #>

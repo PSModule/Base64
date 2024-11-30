@@ -1,10 +1,10 @@
 ﻿Describe 'Base64' {
     Context 'Function: Test-Base64' {
-        It "Test-Base64 -Base64String 'U29tZSBkYXRh' -> true" {
-            Test-Base64 -Base64String 'U29tZSBkYXRh' | Should -Be $true
+        It "Test-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> true" {
+            Test-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' | Should -Be $true
         }
-        It "'U29tZSBkYXRh' | Test-Base64 -> true" {
-            'U29tZSBkYXRh' | Test-Base64 | Should -Be $true
+        It "'SGVsbG8gV29ybGQ=' | Test-Base64 -> true" {
+            'SGVsbG8gV29ybGQ=' | Test-Base64 | Should -Be $true
         }
     }
     Context 'Function: ConvertTo-Base64' {
@@ -12,17 +12,17 @@
             ConvertTo-Base64 -String 'ThisIsANiceString' | Should -Be 'VGhpc0lzQU5pY2VTdHJpbmc='
         }
 
-        It "'Hello World' | ConvertTo-Base64 -> SABlAGwAbABvACAAVwBvAHIAbABkAA==" {
-            'Hello World' | ConvertTo-Base64 | Should -Be 'SABlAGwAbABvACAAVwBvAHIAbABkAA=='
+        It "'Hello World' | ConvertTo-Base64 -> SGVsbG8gV29ybGQ=" {
+            'Hello World' | ConvertTo-Base64 | Should -Be 'SGVsbG8gV29ybGQ='
         }
     }
     Context 'Function: ConvertFrom-Base64' {
-        It "'VGhpc0lzQU5pY2VTdHJpbmc=' | ConvertFrom-Base64 -> ThisIsANiceString" {
-            'VGhpc0lzQU5pY2VTdHJpbmc=' | ConvertFrom-Base64 | Should -Be 'ThisIsANiceString'
+        It "ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> ThisIsANiceString" {
+            ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' | Should -Be 'ThisIsANiceString'
         }
 
-        It "ConvertFrom-Base64 -Base64String 'SABlAGwAbABvACAAVwBvAHIAbABkAA==' -> Hello World" {
-            ConvertFrom-Base64 -Base64String 'SABlAGwAbABvACAAVwBvAHIAbABkAA==' | Should -Be 'Hello World'
+        It "'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 -> Hello World" {
+            'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 | Should -Be 'Hello World'
         }
     }
 }
