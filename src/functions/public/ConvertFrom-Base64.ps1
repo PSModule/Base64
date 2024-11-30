@@ -1,4 +1,4 @@
-﻿function ConvertFrom-Base64 {
+﻿filter ConvertFrom-Base64 {
     <#
         .SYNOPSIS
         Convert to string from base64
@@ -23,7 +23,10 @@
     [CmdletBinding()]
     param(
         # The Base64 encoded string to convert.
-        [Parameter(Mandatory)]
+        [Parameter(
+            Mandatory,
+            ValueFromPipeline
+        )]
         [string] $Base64String
     )
 

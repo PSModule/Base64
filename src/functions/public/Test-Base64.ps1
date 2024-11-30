@@ -1,4 +1,4 @@
-﻿function Test-Base64 {
+﻿filter Test-Base64 {
     <#
         .SYNOPSIS
         Test if a string is a valid Base64 string.
@@ -15,6 +15,10 @@
     [OutputType([bool])]
     [CmdletBinding()]
     param (
+        [Parameter(
+            Mandatory,
+            ValueFromPipeline
+        )]
         [string] $Base64String
     )
 
