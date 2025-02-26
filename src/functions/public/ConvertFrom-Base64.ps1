@@ -1,10 +1,10 @@
 ﻿filter ConvertFrom-Base64 {
     <#
         .SYNOPSIS
-        Decodes a Base64-encoded string into a UTF-8 string.
+        Decodes a base64-encoded string into a UTF-8 string.
 
         .DESCRIPTION
-        Converts a Base64-encoded string into a human-readable UTF-8 string. The function accepts input from the pipeline
+        Converts a base64-encoded string into a human-readable UTF-8 string. The function accepts input from the pipeline
         and validates the input using the `Test-Base64` function before decoding.
 
         .EXAMPLE
@@ -15,7 +15,7 @@
         Some data
         ```
 
-        Decodes the Base64-encoded string "U29tZSBkYXRh" into its original UTF-8 representation.
+        Decodes the base64-encoded string "U29tZSBkYXRh" into its original UTF-8 representation.
 
         .OUTPUTS
         System.String
@@ -30,15 +30,20 @@
     [OutputType([string])]
     [CmdletBinding()]
     param(
-        # The Base64-encoded string to be decoded.
+        # The base64-encoded string to be decoded.
         [Parameter(
             Mandatory,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName
         )]
         [ValidateScript({ Test-Base64 -Base64String $_ }, ErrorMessage = 'Invalid Base64 string')]
-        [string] $Base64String
+        [string] $Base64String,
+
+        # The encoding to use when converting the string to bytes.
+        [Parameter()]
+        [ValidateSet('UTF8', 'UTF7', 'UTF32', 'ASCII', 'Unicode', 'BigEndianUnicode', 'Latin1')]
+        [string] $Encoding = 'UTF8'
     )
 
-    [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Base64String))
+    [System.Text.Encoding]::$Encoding.GetString([Convert]::FromBase64String($Base64String))
 }
