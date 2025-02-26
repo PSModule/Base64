@@ -1,28 +1,36 @@
 ﻿filter ConvertTo-Base64 {
     <#
         .SYNOPSIS
-        Convert a string to base64
+        Converts a string to its Base64 encoded representation.
 
         .DESCRIPTION
-        Converts a string to a base64 encoded string.
+        This function takes a string as input and converts it to a Base64 encoded string using UTF-8 encoding.
+        It accepts input from the pipeline and can process string values directly.
 
         .EXAMPLE
-        ConvertTo-Base64 -String 'ThisIsANiceString'
-        VGhpc0lzQU5pY2VTdHJpbmc=
+        "Hello World" | ConvertTo-Base64
 
-        Converts the string 'ThisIsANiceString' to a base64 encoded string.
-
-        .EXAMPLE
-        'Hello World' | ConvertTo-Base64
+        Output:
+        ```powershell
         SGVsbG8gV29ybGQ=
+        ```
 
-        Converts the string 'Hello World' to base64.
+        Converts the string "Hello World" to its Base64 encoded equivalent.
+
+        .OUTPUTS
+        System.String
+
+        .NOTES
+        The Base64 encoded representation of the input string.
+
+        .LINK
+        https://psmodule.io/Base64/Functions/ConvertTo-Base64/
     #>
     [Alias('ConvertTo-Base64String')]
     [OutputType([string])]
     [CmdletBinding()]
     param(
-        # The string to convert to base64
+        # The input string to be converted to Base64 encoding.
         [Parameter(
             Mandatory,
             ValueFromPipeline,
@@ -30,5 +38,5 @@
         )]
         [string] $String
     )
-    return [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
+    [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
 }

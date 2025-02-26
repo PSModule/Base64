@@ -1,35 +1,44 @@
 ﻿filter ConvertFrom-Base64 {
     <#
         .SYNOPSIS
-        Convert to string from base64
+        Decodes a Base64-encoded string into a UTF-8 string.
 
         .DESCRIPTION
-        Converts a base64 encoded string to a string.
+        Converts a Base64-encoded string into a human-readable UTF-8 string. The function accepts input from the pipeline
+        and validates the input using the `Test-Base64` function before decoding.
 
         .EXAMPLE
-        ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc='
-        ThisIsANiceString
+        "U29tZSBkYXRh" | ConvertFrom-Base64
 
-        Converts the base64 encoded string 'VGhpc0lzQU5pY2VTdHJpbmc=' to a string.
+        Output:
+        ```powershell
+        Some data
+        ```
 
-        .EXAMPLE
-        'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64String
-        Hello World
+        Decodes the Base64-encoded string "U29tZSBkYXRh" into its original UTF-8 representation.
 
-        Converts the string from base64 to a regular string.
+        .OUTPUTS
+        System.String
+
+        .NOTES
+        The decoded UTF-8 string.
+
+        .LINK
+        https://psmodule.io/Base64/Functions/ConvertFrom-Base64/
     #>
     [Alias('ConvertFrom-Base64String')]
     [OutputType([string])]
     [CmdletBinding()]
     param(
-        # The base64 encoded string to convert.
+        # The Base64-encoded string to be decoded.
         [Parameter(
             Mandatory,
-            ValueFromPipeline
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName
         )]
         [ValidateScript({ Test-Base64 -Base64String $_ }, ErrorMessage = 'Invalid Base64 string')]
         [string] $Base64String
     )
 
-    return [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Base64String))
+    [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Base64String))
 }
