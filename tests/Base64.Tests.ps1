@@ -28,6 +28,23 @@
             $result[0] | Should -Be 'SGVsbG8='
             $result[1] | Should -Be 'V29ybGQ='
         }
+
+        It "Variable containing multiple strings piped to ConvertTo-Base64" {
+            $strings = @('Hello', 'World')
+            $result = $strings | ConvertTo-Base64
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'SGVsbG8='
+            $result[1] | Should -Be 'V29ybGQ='
+        }
+
+        It "File content piped to ConvertTo-Base64" {
+            $testFilePath = '/tmp/base64_test/test_content.txt'
+            $result = Get-Content -Path $testFilePath | ConvertTo-Base64
+            $result.Count | Should -Be 3
+            $result[0] | Should -Be 'TGluZSAx'
+            $result[1] | Should -Be 'TGluZSAy'
+            $result[2] | Should -Be 'TGluZSAz'
+        }
     }
     Context 'Function: ConvertFrom-Base64' {
         It "ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> ThisIsANiceString" {
@@ -49,6 +66,24 @@
             $result.Count | Should -Be 2
             $result[0] | Should -Be 'Hello'
             $result[1] | Should -Be 'World'
+        }
+
+        It "Variable containing multiple Base64 strings piped to ConvertFrom-Base64" {
+            $base64Strings = @('SGVsbG8=', 'V29ybGQ=')
+            $result = $base64Strings | ConvertFrom-Base64
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'Hello'
+            $result[1] | Should -Be 'World'
+        }
+
+        It "File content with Base64 strings piped to ConvertFrom-Base64" {
+            $testBase64FilePath = '/tmp/base64_test/test_base64_content.txt'
+            @('TGluZSAx', 'TGluZSAy', 'TGluZSAz') | Out-File -FilePath $testBase64FilePath
+            $result = Get-Content -Path $testBase64FilePath | ConvertFrom-Base64
+            $result.Count | Should -Be 3
+            $result[0] | Should -Be 'Line 1'
+            $result[1] | Should -Be 'Line 2'
+            $result[2] | Should -Be 'Line 3'
         }
     }
 }
