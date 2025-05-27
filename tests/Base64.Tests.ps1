@@ -15,6 +15,20 @@
         It "'Hello World' | ConvertTo-Base64 -> SGVsbG8gV29ybGQ=" {
             'Hello World' | ConvertTo-Base64 | Should -Be 'SGVsbG8gV29ybGQ='
         }
+        
+        It "ConvertTo-Base64 -String @('Hello', 'World') -> @('SGVsbG8=', 'V29ybGQ=')" {
+            $result = ConvertTo-Base64 -String @('Hello', 'World')
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'SGVsbG8='
+            $result[1] | Should -Be 'V29ybGQ='
+        }
+
+        It "@('Hello', 'World') | ConvertTo-Base64 -> @('SGVsbG8=', 'V29ybGQ=')" {
+            $result = @('Hello', 'World') | ConvertTo-Base64
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'SGVsbG8='
+            $result[1] | Should -Be 'V29ybGQ='
+        }
     }
     Context 'Function: ConvertFrom-Base64' {
         It "ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> ThisIsANiceString" {
@@ -23,6 +37,20 @@
 
         It "'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 -> Hello World" {
             'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 | Should -Be 'Hello World'
+        }
+        
+        It "ConvertFrom-Base64 -Base64String @('SGVsbG8=', 'V29ybGQ=') -> @('Hello', 'World')" {
+            $result = ConvertFrom-Base64 -Base64String @('SGVsbG8=', 'V29ybGQ=')
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'Hello'
+            $result[1] | Should -Be 'World'
+        }
+
+        It "@('SGVsbG8=', 'V29ybGQ=') | ConvertFrom-Base64 -> @('Hello', 'World')" {
+            $result = @('SGVsbG8=', 'V29ybGQ=') | ConvertFrom-Base64
+            $result.Count | Should -Be 2
+            $result[0] | Should -Be 'Hello'
+            $result[1] | Should -Be 'World'
         }
     }
 }
