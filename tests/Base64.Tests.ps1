@@ -15,7 +15,6 @@
         It "'Hello World' | ConvertTo-Base64 -> SGVsbG8gV29ybGQ=" {
             'Hello World' | ConvertTo-Base64 | Should -Be 'SGVsbG8gV29ybGQ='
         }
-        
         It "ConvertTo-Base64 -String @('Hello', 'World') -> @('SGVsbG8=', 'V29ybGQ=')" {
             $result = ConvertTo-Base64 -String @('Hello', 'World')
             $result.Count | Should -Be 2
@@ -38,7 +37,6 @@
         It "'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 -> Hello World" {
             'SGVsbG8gV29ybGQ=' | ConvertFrom-Base64 | Should -Be 'Hello World'
         }
-        
         It "ConvertFrom-Base64 -Base64String @('SGVsbG8=', 'V29ybGQ=') -> @('Hello', 'World')" {
             $result = ConvertFrom-Base64 -Base64String @('SGVsbG8=', 'V29ybGQ=')
             $result.Count | Should -Be 2
