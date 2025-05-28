@@ -70,6 +70,17 @@ Describe 'Base64' {
             $result[1] | Should -Be 'TGluZSAy'
             $result[2] | Should -Be 'TGluZSAz'
         }
+
+        It "File content piped to ConvertTo-Base64 with AsOneString" {
+            $testFilePath = '/tmp/base64_test/test_content.txt'
+            $result = Get-Content -Path $testFilePath | ConvertTo-Base64 -AsOneString
+            $result | Should -Be 'TGluZSAxCkxpbmUgMgpMaW5lIDM='
+        }
+        
+        It "@('Hello', 'World') | ConvertTo-Base64 -AsOneString -> single string" {
+            $result = @('Hello', 'World') | ConvertTo-Base64 -AsOneString
+            $result | Should -Be 'SGVsbG8KV29ybGQ='
+        }
     }
     Context 'Function: ConvertFrom-Base64' {
         It "ConvertFrom-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> ThisIsANiceString" {
