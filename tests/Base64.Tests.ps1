@@ -1,4 +1,29 @@
-﻿Describe 'Base64' {
+﻿BeforeAll {
+    # Import functions directly
+    . "$PSScriptRoot/../src/functions/public/Test-Base64.ps1"
+    . "$PSScriptRoot/../src/functions/public/ConvertTo-Base64.ps1"
+    . "$PSScriptRoot/../src/functions/public/ConvertFrom-Base64.ps1"
+
+    # Create test files
+    $testContentPath = '/tmp/base64_test/test_content.txt'
+    if (-not (Test-Path $testContentPath)) {
+        New-Item -ItemType Directory -Path '/tmp/base64_test' -Force | Out-Null
+        @"
+Line 1
+Line 2
+Line 3
+"@ | Out-File -FilePath $testContentPath -Encoding UTF8
+    }
+
+    $testBase64Path = '/tmp/base64_test/test_base64_content.txt'
+    @"
+TGluZSAx
+TGluZSAy
+TGluZSAz
+"@ | Out-File -FilePath $testBase64Path -Encoding UTF8
+}
+
+Describe 'Base64' {
     Context 'Function: Test-Base64' {
         It "Test-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' -> true" {
             Test-Base64 -Base64String 'VGhpc0lzQU5pY2VTdHJpbmc=' | Should -Be $true
