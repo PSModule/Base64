@@ -1,4 +1,6 @@
-﻿BeforeAll {
+﻿#Requires -Modules @{ ModuleName = 'Pester'; ModuleVersion = '6.0.0'; MaximumVersion = '6.*'; GUID = 'a699dea5-2c73-4616-a270-1f7abb777e71' }
+
+BeforeAll {
     # Import functions directly
     . "$PSScriptRoot/../src/functions/public/Test-Base64.ps1"
     . "$PSScriptRoot/../src/functions/public/ConvertTo-Base64.ps1"
